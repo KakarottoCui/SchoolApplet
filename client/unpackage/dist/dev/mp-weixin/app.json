@@ -1,0 +1,51 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/community/community",
+    "pages/message/message",
+    "pages/home/home",
+    "pages/common/commonArticle",
+    "pages/common/reviewArticle",
+    "pages/common/addArticle"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#3c9cff",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/tab1-0.png",
+        "selectedIconPath": "static/tab1-1.png",
+        "text": "校园动态"
+      },
+      {
+        "pagePath": "pages/community/community",
+        "iconPath": "static/tab2-0.png",
+        "selectedIconPath": "static/tab2-1.png",
+        "text": "校园社区"
+      },
+      {
+        "pagePath": "pages/message/message",
+        "iconPath": "static/tab3-0.png",
+        "selectedIconPath": "static/tab3-1.png",
+        "text": "消息订阅"
+      },
+      {
+        "pagePath": "pages/home/home",
+        "iconPath": "static/tab4-0.png",
+        "selectedIconPath": "static/tab4-1.png",
+        "text": "个人中心"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kbz1121.MySchool.dao.ScUserDao">
+
+    <resultMap type="com.kbz1121.MySchool.entity.ScUser" id="ScUserMap">
+        <result property="userNo" column="user_no" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="nick" column="nick" jdbcType="VARCHAR"/>
+        <result property="deptFk" column="dept_fk" jdbcType="INTEGER"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="project" column="project" jdbcType="VARCHAR"/>
+        <result property="validFlag" column="valid_flag" jdbcType="INTEGER"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="picFk" column="pic_fk" jdbcType="INTEGER"/>
+        <result property="unionid" column="unionid" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ScUserMap">
+        select
+          user_no, name, nick, dept_fk, sex, project, valid_flag, phone, create_time, update_time, type, pic_fk, unionid
+        from sc_user
+        where user_no = #{userNo}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ScUserMap">
+        select
+          user_no, name, nick, dept_fk, sex, project, valid_flag, phone, create_time, update_time, type, pic_fk, unionid
+        from sc_user
+        <where>
+            <if test="scUser.userNo != null and scUser.userNo != ''">
+                and user_no = #{scUser.userNo}
+            </if>
+            <if test="scUser.name != null and scUser.name != ''">
+                and name = #{scUser.name}
+            </if>
+            <if test="scUser.nick != null and scUser.nick != ''">
+                and nick = #{scUser.nick}
+            </if>
+            <if test="scUser.deptFk != null">
+                and dept_fk = #{scUser.deptFk}
+            </if>
+            <if test="scUser.sex != null">
+                and sex = #{scUser.sex}
+            </if>
+            <if test="scUser.project != null and scUser.project != ''">
+                and project = #{scUser.project}
+            </if>
+            <if test="scUser.validFlag != null">
+                and valid_flag = #{scUser.validFlag}
+            </if>
+            <if test="scUser.phone != null and scUser.phone != ''">
+                and phone = #{scUser.phone}
+            </if>
+            <if test="scUser.createTime != null">
+                and create_time = #{scUser.createTime}
+            </if>
+            <if test="scUser.updateTime != null">
+                and update_time = #{scUser.updateTime}
+            </if>
+            <if test="scUser.type != null">
+                and type = #{scUser.type}
+            </if>
+            <if test="scUser.picFk != null">
+                and pic_fk = #{scUser.picFk}
+            </if>
+            <if test="scUser.unionid != null and scUser.unionid != ''">
+                and unionid = #{scUser.unionid}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+    
+        <!--查询全部数据-->
+    <select id="queryAll" resultMap="ScUserMap">
+        select
+          user_no, name, nick, dept_fk, sex, project, valid_flag, phone, create_time, update_time, type, pic_fk, unionid
+        from sc_user
+        <where>
+            <if test="userNo != null and userNo != ''">
+                and user_no = #{userNo}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="nick != null and nick != ''">
+                and nick = #{nick}
+            </if>
+            <if test="deptFk != null">
+                and dept_fk = #{deptFk}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+            <if test="project != null and project != ''">
+                and project = #{project}
+            </if>
+            <if test="validFlag != null">
+                and valid_flag = #{validFlag}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="picFk != null">
+                and pic_fk = #{picFk}
+            </if>
+            <if test="unionid != null and unionid != ''">
+                and unionid = #{unionid}
+            </if>
+        </where>
+    </select>
+    
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from sc_user
+        <where>
+            <if test="userNo != null and userNo != ''">
+                and user_no = #{userNo}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="nick != null and nick != ''">
+                and nick = #{nick}
+            </if>
+            <if test="deptFk != null">
+                and dept_fk = #{deptFk}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+            <if test="project != null and project != ''">
+                and project = #{project}
+            </if>
+            <if test="validFlag != null">
+                and valid_flag = #{validFlag}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="picFk != null">
+                and pic_fk = #{picFk}
+            </if>
+            <if test="unionid != null and unionid != ''">
+                and unionid = #{unionid}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="userNo" useGeneratedKeys="true">
+        insert into sc_user(user_no, name, nick, dept_fk, sex, project, valid_flag, phone, create_time, update_time, type, pic_fk, unionid)
+        values (#{userNo},#{name}, #{nick}, #{deptFk}, #{sex}, #{project}, #{validFlag}, #{phone}, #{createTime}, #{updateTime}, #{type}, #{picFk}, #{unionid})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="userNo" useGeneratedKeys="true">
+        insert into sc_user(name, nick, dept_fk, sex, project, valid_flag, phone, create_time, update_time, type, pic_fk, unionid)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.name}, #{entity.nick}, #{entity.deptFk}, #{entity.sex}, #{entity.project}, #{entity.validFlag}, #{entity.phone}, #{entity.createTime}, #{entity.updateTime}, #{entity.type}, #{entity.picFk}, #{entity.unionid})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="userNo" useGeneratedKeys="true">
+        insert into sc_user(name, nick, dept_fk, sex, project, valid_flag, phone, create_time, update_time, type, pic_fk, unionid)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.name}, #{entity.nick}, #{entity.deptFk}, #{entity.sex}, #{entity.project}, #{entity.validFlag}, #{entity.phone}, #{entity.createTime}, #{entity.updateTime}, #{entity.type}, #{entity.picFk}, #{entity.unionid})
+        </foreach>
+        on duplicate key update
+        name = values(name),
+        nick = values(nick),
+        dept_fk = values(dept_fk),
+        sex = values(sex),
+        project = values(project),
+        valid_flag = values(valid_flag),
+        phone = values(phone),
+        create_time = values(create_time),
+        update_time = values(update_time),
+        type = values(type),
+        pic_fk = values(pic_fk),
+        unionid = values(unionid)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update sc_user
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="nick != null and nick != ''">
+                nick = #{nick},
+            </if>
+            <if test="deptFk != null">
+                dept_fk = #{deptFk},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="project != null and project != ''">
+                project = #{project},
+            </if>
+            <if test="validFlag != null">
+                valid_flag = #{validFlag},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="picFk != null">
+                pic_fk = #{picFk},
+            </if>
+            <if test="unionid != null and unionid != ''">
+                unionid = #{unionid},
+            </if>
+        </set>
+        where user_no = #{userNo}
+    </update>
+
+    <update id="updateByUid">
+        update sc_user
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="nick != null and nick != ''">
+                nick = #{nick},
+            </if>
+            <if test="deptFk != null">
+                dept_fk = #{deptFk},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="project != null and project != ''">
+                project = #{project},
+            </if>
+            <if test="validFlag != null">
+                valid_flag = #{validFlag},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="picFk != null">
+                pic_fk = #{picFk},
+            </if>
+            <if test="userNo != null and userNo != ''">
+                user_no = #{userNo}
+            </if>
+        </set>
+        where unionid = #{unionid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from sc_user where user_no = #{userNo}
+    </delete>
+
+</mapper>
+

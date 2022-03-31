@@ -1,0 +1,54 @@
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  #设置空如何序列化
+  defaultPropertyInclusion: non_null
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 232521
+    url: jdbc:mysql://localhost:3306/SchoolInfo?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    connection-timeout: 35000
+    minimum-idle: 10
+    maximum-pool-size: 15
+    auto-commit: true
+    idle-timeout: 30000
+    pool-name: schoolDb
+    max-lifetime: 900000
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+#mybatis:
+#  #mapper配置文件
+#  mapper-locations: classpath:mapper/*/*.xml
+#  type-aliases-package: com.ivo.mas.IVOExam/*
+#  #开启驼峰命名
+#  configuration:
+#    map-underscore-to-camel-case: true
+#showSql
+logging:
+  level:
+    com:
+      kbz1121:
+        MySchool:
+            dao: debug
+
+  mvc:
+    static-path-pattern: /static/**
+    async:
+      request-timeout: 10000
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 300MB
+      enabled: true
+server:
+  servlet:
+    context-path: /MySchool
+    session:
+      timeout: 36000
+  port: 9091
+  tomcat:
+    max-http-form-post-size: 104857600

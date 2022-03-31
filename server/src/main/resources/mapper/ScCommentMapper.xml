@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kbz1121.MySchool.dao.ScCommentDao">
+
+    <resultMap type="com.kbz1121.MySchool.entity.ScComment" id="ScCommentMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="context" column="context" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="validFlag" column="valid_flag" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="userNo" column="user_no" jdbcType="VARCHAR"/>
+        <result property="comFk" column="com_fk" jdbcType="VARCHAR"/>
+        <result property="artFk" column="art_fk" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="queryByParam" resultMap="ScCommentMap">
+        SELECT com.*,usr.name,usr.nick,pic.base64 FROM sc_comment com
+        LEFT JOIN sc_user usr on com.user_no = usr.user_no and com.valid_flag = 1
+        left join sc_pic pic on com.user_no = pic.user_fk AND pic.type = 1
+        <where>
+                com.valid_flag = 1
+            <if test="artFk != null">
+                and com.art_fk = #{artFk}
+            </if>
+            <if test="comFk != null">
+                and com.com_fk = #{comFk}
+            </if>
+            <if test="type != null">
+                and com.type = #{type}
+            </if>
+            <if test="userNo != null">
+                and com.user_no = #{userNo}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryByAritcleParam" resultMap="ScCommentMap">
+        SELECT com.*,art.title,usr.nick  FROM sc_comment com LEFT JOIN sc_article art on com.art_fk = art.id
+        left join sc_user usr on usr.user_no = art.user_fk
+
+        <where>
+            com.valid_flag = 1 and
+            com.type = 0 and  art.valid_falg = 1
+            <if test="userNo != null">
+                and art.user_fk = #{userNo}
+            </if>
+        </where>
+    </select>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ScCommentMap">
+        select
+          id, context, create_time, update_time, valid_flag, type, user_no, com_fk, art_fk
+        from sc_comment
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ScCommentMap">
+        select
+          id, context, create_time, update_time, valid_flag, type, user_no, com_fk, art_fk
+        from sc_comment
+        <where>
+            <if test="scComment.id != null">
+                and id = #{scComment.id}
+            </if>
+            <if test="scComment.context != null and scComment.context != ''">
+                and context = #{scComment.context}
+            </if>
+            <if test="scComment.createTime != null">
+                and create_time = #{scComment.createTime}
+            </if>
+            <if test="scComment.updateTime != null">
+                and update_time = #{scComment.updateTime}
+            </if>
+            <if test="scComment.validFlag != null">
+                and valid_flag = #{scComment.validFlag}
+            </if>
+            <if test="scComment.type != null">
+                and type = #{scComment.type}
+            </if>
+            <if test="scComment.userNo != null and scComment.userNo != ''">
+                and user_no = #{scComment.userNo}
+            </if>
+            <if test="scComment.comFk != null and scComment.comFk != ''">
+                and com_fk = #{scComment.comFk}
+            </if>
+            <if test="scComment.artFk != null">
+                and art_fk = #{scComment.artFk}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+    
+        <!--查询全部数据-->
+    <select id="queryAll" resultMap="ScCommentMap">
+        select
+          id, context, create_time, update_time, valid_flag, type, user_no, com_fk, art_fk
+        from sc_comment
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="context != null and context != ''">
+                and context = #{context}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="validFlag != null">
+                and valid_flag = #{validFlag}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="userNo != null and userNo != ''">
+                and user_no = #{userNo}
+            </if>
+            <if test="comFk != null and comFk != ''">
+                and com_fk = #{comFk}
+            </if>
+            <if test="artFk != null">
+                and art_fk = #{artFk}
+            </if>
+        </where>
+    </select>
+    
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from sc_comment
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="context != null and context != ''">
+                and context = #{context}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="validFlag != null">
+                and valid_flag = #{validFlag}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="userNo != null and userNo != ''">
+                and user_no = #{userNo}
+            </if>
+            <if test="comFk != null and comFk != ''">
+                and com_fk = #{comFk}
+            </if>
+            <if test="artFk != null">
+                and art_fk = #{artFk}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into sc_comment(context, create_time, update_time, valid_flag, type, user_no, com_fk, art_fk)
+        values (#{context}, #{createTime}, #{updateTime}, #{validFlag}, #{type}, #{userNo}, #{comFk}, #{artFk})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into sc_comment(context, create_time, update_time, valid_flag, type, user_no, com_fk, art_fk)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.context}, #{entity.createTime}, #{entity.updateTime}, #{entity.validFlag}, #{entity.type}, #{entity.userNo}, #{entity.comFk}, #{entity.artFk})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into sc_comment(context, create_time, update_time, valid_flag, type, user_no, com_fk, art_fk)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.context}, #{entity.createTime}, #{entity.updateTime}, #{entity.validFlag}, #{entity.type}, #{entity.userNo}, #{entity.comFk}, #{entity.artFk})
+        </foreach>
+        on duplicate key update
+        context = values(context),
+        create_time = values(create_time),
+        update_time = values(update_time),
+        valid_flag = values(valid_flag),
+        type = values(type),
+        user_no = values(user_no),
+        com_fk = values(com_fk),
+        art_fk = values(art_fk)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update sc_comment
+        <set>
+            <if test="context != null and context != ''">
+                context = #{context},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="validFlag != null">
+                valid_flag = #{validFlag},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="userNo != null and userNo != ''">
+                user_no = #{userNo},
+            </if>
+            <if test="comFk != null and comFk != ''">
+                com_fk = #{comFk},
+            </if>
+            <if test="artFk != null">
+                art_fk = #{artFk},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from sc_comment where id = #{id}
+    </delete>
+
+</mapper>
+

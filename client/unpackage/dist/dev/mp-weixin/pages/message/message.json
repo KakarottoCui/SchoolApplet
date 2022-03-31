@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "互动消息",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "u-tabs": "/uview-ui/components/u-tabs/u-tabs",
+    "u-empty": "/uview-ui/components/u-empty/u-empty",
+    "u-cell-group": "/uview-ui/components/u-cell-group/u-cell-group",
+    "u-cell-item": "/uview-ui/components/u-cell-item/u-cell-item"
+  }
+}

@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kbz1121.MySchool.dao.ScArticleDao">
+
+    <resultMap type="com.kbz1121.MySchool.entity.ScArticle" id="ScArticleMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="info" column="info" jdbcType="INTEGER"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="context" column="context" jdbcType="VARCHAR"/>
+        <result property="userFk" column="user_fk" jdbcType="VARCHAR"/>
+        <result property="deptFk" column="dept_fk" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="validFalg" column="valid_falg" jdbcType="INTEGER"/>
+        <result property="level" column="level" jdbcType="INTEGER"/>
+        <result property="pic" column="pic" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ScArticleMap">
+        select
+          id, type, info, title, context, user_fk, dept_fk, create_time, update_time, valid_falg, level, pic
+        from sc_article
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ScArticleMap">
+        select
+          id, type, info, title, context, user_fk, dept_fk, create_time, update_time, valid_falg, level, pic
+        from sc_article
+        <where>
+            <if test="scArticle.id != null">
+                and id = #{scArticle.id}
+            </if>
+            <if test="scArticle.type != null">
+                and type = #{scArticle.type}
+            </if>
+            <if test="scArticle.info != null">
+                and info = #{scArticle.info}
+            </if>
+            <if test="scArticle.title != null and scArticle.title != ''">
+                and title = #{scArticle.title}
+            </if>
+            <if test="scArticle.context != null and scArticle.context != ''">
+                and context = #{scArticle.context}
+            </if>
+            <if test="scArticle.userFk != null and scArticle.userFk != ''">
+                and user_fk = #{scArticle.userFk}
+            </if>
+            <if test="scArticle.deptFk != null">
+                and dept_fk = #{scArticle.deptFk}
+            </if>
+            <if test="scArticle.createTime != null">
+                and create_time = #{scArticle.createTime}
+            </if>
+            <if test="scArticle.updateTime != null">
+                and update_time = #{scArticle.updateTime}
+            </if>
+            <if test="scArticle.validFalg != null">
+                and valid_falg = #{scArticle.validFalg}
+            </if>
+            <if test="scArticle.level != null">
+                and level = #{scArticle.level}
+            </if>
+            <if test="scArticle.pic != null">
+                and pic = #{scArticle.pic}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+    
+        <!--查询全部数据-->
+    <select id="queryAll" resultMap="ScArticleMap">
+        select
+        dept.name as 'deptName',user.name as 'userName', art.id, art.type, art.info, art.title, art.context, art.user_fk, art.dept_fk, art.create_time, art.update_time, art.valid_falg, art.level, art.pic
+        from sc_article art left join sc_dept dept on dept.id = art.dept_fk left join sc_user user on user.user_no = art.user_fk
+        <where>
+            <if test="id != null">
+                and art.id = #{id}
+            </if>
+            <if test="type != null">
+                and art.type = #{type}
+            </if>
+            <if test="info != null">
+                and art.info = #{info}
+            </if>
+            <if test="title != null and title != ''">
+                and art.title = #{title}
+            </if>
+            <if test="context != null and context != ''">
+                and art.context = #{context}
+            </if>
+            <if test="userFk != null and userFk != ''">
+                and art.user_fk = #{userFk}
+            </if>
+            <if test="deptFk != null">
+                and art.dept_fk = #{deptFk}
+            </if>
+            <if test="createTime != null">
+                and art.create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and art.update_time = #{updateTime}
+            </if>
+            <if test="validFalg != null">
+                and art.valid_falg = #{validFalg}
+            </if>
+            <if test="level != null">
+                and art.level = #{level}
+            </if>
+            <if test="pic != null">
+                and art.pic = #{pic}
+            </if>
+        </where>
+        Order by create_time desc
+    </select>
+    
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from sc_article
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="info != null">
+                and info = #{info}
+            </if>
+            <if test="title != null and title != ''">
+                and title = #{title}
+            </if>
+            <if test="context != null and context != ''">
+                and context = #{context}
+            </if>
+            <if test="userFk != null and userFk != ''">
+                and user_fk = #{userFk}
+            </if>
+            <if test="deptFk != null">
+                and dept_fk = #{deptFk}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="validFalg != null">
+                and valid_falg = #{validFalg}
+            </if>
+            <if test="level != null">
+                and level = #{level}
+            </if>
+            <if test="pic != null">
+                and pic = #{pic}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into sc_article(type, info, title, context, user_fk, dept_fk, create_time, update_time, valid_falg, level, pic)
+        values (#{type}, #{info}, #{title}, #{context}, #{userFk}, #{deptFk}, #{createTime}, #{updateTime}, #{validFalg}, #{level}, #{pic})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into sc_article(type, info, title, context, user_fk, dept_fk, create_time, update_time, valid_falg, level, pic)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.type}, #{entity.info}, #{entity.title}, #{entity.context}, #{entity.userFk}, #{entity.deptFk}, #{entity.createTime}, #{entity.updateTime}, #{entity.validFalg}, #{entity.level}, #{entity.pic})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into sc_article(type, info, title, context, user_fk, dept_fk, create_time, update_time, valid_falg, level, pic)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.type}, #{entity.info}, #{entity.title}, #{entity.context}, #{entity.userFk}, #{entity.deptFk}, #{entity.createTime}, #{entity.updateTime}, #{entity.validFalg}, #{entity.level}, #{entity.pic})
+        </foreach>
+        on duplicate key update
+        type = values(type),
+        info = values(info),
+        title = values(title),
+        context = values(context),
+        user_fk = values(user_fk),
+        dept_fk = values(dept_fk),
+        create_time = values(create_time),
+        update_time = values(update_time),
+        valid_falg = values(valid_falg),
+        level = values(level),
+        pic = values(pic)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update sc_article
+        <set>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="info != null">
+                info = #{info},
+            </if>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="context != null and context != ''">
+                context = #{context},
+            </if>
+            <if test="userFk != null and userFk != ''">
+                user_fk = #{userFk},
+            </if>
+            <if test="deptFk != null">
+                dept_fk = #{deptFk},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="validFalg != null">
+                valid_falg = #{validFalg},
+            </if>
+            <if test="level != null">
+                level = #{level},
+            </if>
+            <if test="pic != null">
+                pic = #{pic},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from sc_article where id = #{id}
+    </delete>
+
+</mapper>
+

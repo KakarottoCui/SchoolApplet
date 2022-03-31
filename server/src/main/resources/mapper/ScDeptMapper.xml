@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kbz1121.MySchool.dao.ScDeptDao">
+
+    <resultMap type="com.kbz1121.MySchool.entity.ScDept" id="ScDeptMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="deptNo" column="dept_no" jdbcType="VARCHAR"/>
+        <result property="level" column="level" jdbcType="INTEGER"/>
+        <result property="deptFk" column="dept_fk" jdbcType="INTEGER"/>
+        <result property="validFlag" column="valid_flag" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ScDeptMap">
+        select
+          id, name, dept_no, level, dept_fk, valid_flag
+        from sc_dept
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ScDeptMap">
+        select
+          id, name, dept_no, level, dept_fk, valid_flag
+        from sc_dept
+        <where>
+            <if test="scDept.id != null">
+                and id = #{scDept.id}
+            </if>
+            <if test="scDept.name != null and scDept.name != ''">
+                and name = #{scDept.name}
+            </if>
+            <if test="scDept.deptNo != null and scDept.deptNo != ''">
+                and dept_no = #{scDept.deptNo}
+            </if>
+            <if test="scDept.level != null">
+                and level = #{scDept.level}
+            </if>
+            <if test="scDept.deptFk != null">
+                and dept_fk = #{scDept.deptFk}
+            </if>
+            <if test="scDept.validFlag != null">
+                and valid_flag = #{scDept.validFlag}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+    
+        <!--查询全部数据-->
+    <select id="queryAll" resultMap="ScDeptMap">
+        select
+          id, name, dept_no, level, dept_fk, valid_flag
+        from sc_dept
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="deptNo != null and deptNo != ''">
+                and dept_no = #{deptNo}
+            </if>
+            <if test="level != null">
+                and level = #{level}
+            </if>
+            <if test="deptFk != null">
+                and dept_fk = #{deptFk}
+            </if>
+            <if test="validFlag != null">
+                and valid_flag = #{validFlag}
+            </if>
+        </where>
+    </select>
+    
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from sc_dept
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="deptNo != null and deptNo != ''">
+                and dept_no = #{deptNo}
+            </if>
+            <if test="level != null">
+                and level = #{level}
+            </if>
+            <if test="deptFk != null">
+                and dept_fk = #{deptFk}
+            </if>
+            <if test="validFlag != null">
+                and valid_flag = #{validFlag}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into sc_dept(name, dept_no, level, dept_fk, valid_flag)
+        values (#{name}, #{deptNo}, #{level}, #{deptFk}, #{validFlag})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into sc_dept(name, dept_no, level, dept_fk, valid_flag)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.name}, #{entity.deptNo}, #{entity.level}, #{entity.deptFk}, #{entity.validFlag})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into sc_dept(name, dept_no, level, dept_fk, valid_flag)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.name}, #{entity.deptNo}, #{entity.level}, #{entity.deptFk}, #{entity.validFlag})
+        </foreach>
+        on duplicate key update
+        name = values(name),
+        dept_no = values(dept_no),
+        level = values(level),
+        dept_fk = values(dept_fk),
+        valid_flag = values(valid_flag)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update sc_dept
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="deptNo != null and deptNo != ''">
+                dept_no = #{deptNo},
+            </if>
+            <if test="level != null">
+                level = #{level},
+            </if>
+            <if test="deptFk != null">
+                dept_fk = #{deptFk},
+            </if>
+            <if test="validFlag != null">
+                valid_flag = #{validFlag},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from sc_dept where id = #{id}
+    </delete>
+
+</mapper>
+

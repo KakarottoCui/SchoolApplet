@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kbz1121.MySchool.dao.ScPicDao">
+
+    <resultMap type="com.kbz1121.MySchool.entity.ScPic" id="ScPicMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="artFk" column="art_fk" jdbcType="INTEGER"/>
+        <result property="userFk" column="user_fk" jdbcType="VARCHAR"/>
+        <result property="validFlag" column="valid_flag" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="base64" column="base64" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ScPicMap">
+        select
+          id, type, art_fk, user_fk, valid_flag, create_time, base64
+        from sc_pic
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ScPicMap">
+        select
+          id, type, art_fk, user_fk, valid_flag, create_time, base64
+        from sc_pic
+        <where>
+            <if test="scPic.id != null">
+                and id = #{scPic.id}
+            </if>
+            <if test="scPic.type != null">
+                and type = #{scPic.type}
+            </if>
+            <if test="scPic.artFk != null">
+                and art_fk = #{scPic.artFk}
+            </if>
+            <if test="scPic.userFk != null and scPic.userFk != ''">
+                and user_fk = #{scPic.userFk}
+            </if>
+            <if test="scPic.validFlag != null">
+                and valid_flag = #{scPic.validFlag}
+            </if>
+            <if test="scPic.createTime != null">
+                and create_time = #{scPic.createTime}
+            </if>
+            <if test="scPic.base64 != null and scPic.base64 != ''">
+                and base64 = #{scPic.base64}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+    
+        <!--查询全部数据-->
+    <select id="queryAll" resultMap="ScPicMap">
+        select
+          id, type, art_fk, user_fk, valid_flag, create_time, base64
+        from sc_pic
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="artFk != null">
+                and art_fk = #{artFk}
+            </if>
+            <if test="userFk != null and userFk != ''">
+                and user_fk = #{userFk}
+            </if>
+            <if test="validFlag != null">
+                and valid_flag = #{validFlag}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="base64 != null and base64 != ''">
+                and base64 = #{base64}
+            </if>
+        </where>
+    </select>
+    
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from sc_pic
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="artFk != null">
+                and art_fk = #{artFk}
+            </if>
+            <if test="userFk != null and userFk != ''">
+                and user_fk = #{userFk}
+            </if>
+            <if test="validFlag != null">
+                and valid_flag = #{validFlag}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="base64 != null and base64 != ''">
+                and base64 = #{base64}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into sc_pic(type, art_fk, user_fk, valid_flag, create_time, base64)
+        values (#{type}, #{artFk}, #{userFk}, #{validFlag}, #{createTime}, #{base64})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into sc_pic(type, art_fk, user_fk, valid_flag, create_time, base64)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.type}, #{entity.artFk}, #{entity.userFk}, #{entity.validFlag}, #{entity.createTime}, #{entity.base64})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into sc_pic(type, art_fk, user_fk, valid_flag, create_time, base64)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.type}, #{entity.artFk}, #{entity.userFk}, #{entity.validFlag}, #{entity.createTime}, #{entity.base64})
+        </foreach>
+        on duplicate key update
+        type = values(type),
+        art_fk = values(art_fk),
+        user_fk = values(user_fk),
+        valid_flag = values(valid_flag),
+        create_time = values(create_time),
+        base64 = values(base64)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update sc_pic
+        <set>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="artFk != null">
+                art_fk = #{artFk},
+            </if>
+            <if test="userFk != null and userFk != ''">
+                user_fk = #{userFk},
+            </if>
+            <if test="validFlag != null">
+                valid_flag = #{validFlag},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="base64 != null and base64 != ''">
+                base64 = #{base64},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from sc_pic where id = #{id}
+    </delete>
+
+</mapper>
+

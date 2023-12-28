@@ -3,8 +3,7 @@
 
 演示视频链接：https://live.csdn.net/v/194133
 
-
-详询 微信1：egvh56ufy7hh ，微信2：dabocode ，钉钉：chengxuyuandabo ，QQ：821898835 ，承接商业项目和毕设
+详询 微信1：egvh56ufy7hh ，微信2：dabocode ，钉钉：chengxuyuandabo ，QQ：821898835 。承接商业项目、毕设和论文，包括但不限于Web、APP、小程序等，提供远程部署和不限次数代码解答！
 
 技术：
 后端使用springboot+mysql
